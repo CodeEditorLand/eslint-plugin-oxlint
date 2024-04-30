@@ -1,66 +1,62 @@
 {
-  "name": "eslint-plugin-oxlint",
-  "version": "0.2.9",
-  "description": "Turn off all rules already supported by oxlint",
-  "type": "module",
-  "packageManager": "pnpm@8.13.1",
-  "exports": {
-    ".": {
-      "import": "./index.js",
-      "require": "./index.cjs",
-      "default": "./index.js",
-      "types": "./index.d.ts"
-    },
-    "./rules": {
-      "import": "./rules.js",
-      "require": "./rules.cjs",
-      "default": "./rules.js",
-      "types": "./rules.d.ts"
-    }
-  },
-  "author": "Dunqing <dengqing0821@gmail.com>",
-  "homepage": "https://github.com/oxc-project/eslint-plugin-oxlint",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:oxc-project/eslint-plugin-oxlint.git"
-  },
-  "license": "MIT",
-  "scripts": {
-    "generate": "tsx ./scripts/generate-rules.ts",
-    "lint": "npx oxlint && npx eslint",
-    "format": "npx prettier --write .",
-    "release": "bumpp package.json",
-    "prepare": "husky",
-    "test": "vitest run"
-  },
-  "keywords": [
-    "oxc",
-    "oxlint",
-    "eslint",
-    "rules"
-  ],
-  "devDependencies": {
-    "@eslint/eslintrc": "^3.0.0",
-    "@types/eslint": "^8.56.5",
-    "@types/node": "^20.12.5",
-    "@typescript-eslint/eslint-plugin": "^7.0.0",
-    "@typescript-eslint/parser": "^6.16.0",
-    "@vitest/coverage-v8": "^1.5.0",
-    "axios": "^1.6.3",
-    "bumpp": "^9.2.1",
-    "eslint": "^8.56.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-unicorn": "^52.0.0",
-    "husky": "^9.0.11",
-    "lint-staged": "^15.2.0",
-    "oxlint": "^0.3.0",
-    "prettier": "^3.2.4",
-    "tsx": "^4.7.2",
-    "typescript": "^5.4.4",
-    "vitest": "^1.5.0"
-  },
-  "lint-staged": {
-    "*.{js,cjs,ts}": "eslint",
-    "*": "prettier --ignore-unknown --write"
-  }
+	"name": "eslint-plugin-oxlint",
+	"version": "0.0.1",
+	"private": false,
+	"description": "Turn off all rules already supported by oxlint",
+	"keywords": [
+		"land"
+	],
+	"homepage": "HTTPS://GitHub.Com/CodeEditorLand/EslintPluginOxlint#readme",
+	"bugs": {
+		"url": "HTTPS://GitHub.Com/CodeEditorLand/EslintPluginOxlint/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+HTTPS://github.com/CodeEditorLand/EslintPluginOxlint.git"
+	},
+	"license": "SEE LICENSE IN LICENSE",
+	"author": {
+		"name": "🌆 — Land —",
+		"email": "Land@PlayForm.Cloud",
+		"url": "HTTPS://Land.PlayForm.Cloud"
+	},
+	"type": "module",
+	"exports": {
+		".": {
+			"default": "./index.js",
+			"import": "./index.js",
+			"require": "./index.cjs",
+			"types": "./index.d.ts"
+		},
+		"./rules": {
+			"default": "./rules.js",
+			"import": "./rules.js",
+			"require": "./rules.cjs",
+			"types": "./rules.d.ts"
+		}
+	},
+	"scripts": {
+		"Document": "Document 'Source/**/*.ts'",
+		"generate": "tsx ./scripts/generate-rules.ts",
+		"prepare": "husky",
+		"prepublishOnly": "Build 'Source/**/*.ts'",
+		"release": "bumpp package.json"
+	},
+	"lint-staged": {
+		"*": "prettier --ignore-unknown --write",
+		"*.{js,cjs,ts}": "eslint"
+	},
+	"devDependencies": {
+		"@playform/build": "0.0.7",
+		"@playform/document": "0.0.6",
+		"@types/node": "^20.12.5",
+		"axios": "^1.6.3",
+		"bumpp": "^9.2.1",
+		"lint-staged": "^15.2.0",
+		"oxlint": "^0.3.0",
+		"tsx": "^4.7.2"
+	},
+	"publishConfig": {
+		"access": "public"
+	}
 }
