@@ -49,12 +49,12 @@
 	"devDependencies": {
 		"@playform/build": "0.0.7",
 		"@playform/document": "0.0.6",
-		"@types/node": "^20.12.5",
-		"axios": "^1.6.3",
-		"bumpp": "^9.2.1",
-		"lint-staged": "^15.2.0",
-		"oxlint": "^0.3.0",
-		"tsx": "^4.7.2"
+		"@types/node": "20.12.7",
+		"axios": "1.6.8",
+		"bumpp": "9.4.1",
+		"lint-staged": "15.2.2",
+		"oxlint": "0.3.1",
+		"tsx": "4.8.2"
 	},
 	"publishConfig": {
 		"access": "public"
