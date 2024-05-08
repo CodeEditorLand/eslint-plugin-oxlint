@@ -47,9 +47,9 @@
 		"*.{js,cjs,ts}": "eslint"
 	},
 	"devDependencies": {
-		"@playform/build": "0.0.7",
+		"@playform/build": "0.0.8",
 		"@playform/document": "0.0.6",
-		"@types/node": "20.12.10",
+		"@types/node": "20.12.11",
 		"axios": "1.6.8",
 		"bumpp": "9.4.1",
 		"lint-staged": "15.2.2",
