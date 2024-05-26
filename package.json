@@ -42,7 +42,7 @@
 		"dedent": "1.5.3",
 		"lint-staged": "15.2.4",
 		"memfs": "4.9.2",
-		"oxlint": "0.3.5",
+		"oxlint": "0.4.1",
 		"shelljs": "0.8.5",
 		"tsx": "4.11.0"
 	}
