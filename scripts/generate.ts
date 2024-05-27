@@ -1,12 +1,12 @@
-import { RulesGenerator, RulesGrouping } from "./rules-generator.js";
-import { traverseRules } from "./traverse-rules.js";
+import { RulesGenerator, RulesGrouping } from './rules-generator.js';
+import { traverseRules } from './traverse-rules.js';
 
 const { successResultArray, failureResultArray } = await traverseRules();
 
 if (failureResultArray.length > 0) {
-	throw new Error(
-		`Failed to generate rules for the following rules ${failureResultArray}`,
-	);
+  throw new Error(
+    `Failed to generate rules for the following rules ${failureResultArray}`
+  );
 }
 
 const generator = new RulesGenerator(successResultArray);
