@@ -40,7 +40,7 @@
 		"@types/shelljs": "0.8.15",
 		"bumpp": "9.4.1",
 		"dedent": "1.5.3",
-		"lint-staged": "15.2.5",
+		"lint-staged": "15.2.6",
 		"memfs": "4.9.2",
 		"oxlint": "0.4.3",
 		"shelljs": "0.8.5",
