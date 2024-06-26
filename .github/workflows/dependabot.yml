@@ -1,66 +1,45 @@
-name: Bump oxlint
+name: Dependabot
 
-on:
-  pull_request:
-    types:
-      - labeled
+concurrency:
+    group: Dependabot-${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
 
 permissions:
-  pull-requests: write
-  contents: write
+    security-events: write
+    contents: write
+    pull-requests: write
 
-env:
-  OXLINT_PACKAGE_NAME: oxlint
+on:
+    workflow_dispatch:
+    pull_request:
 
 jobs:
-  bump-oxlint-rules:
-    runs-on: ubuntu-latest
-    if: github.actor == 'dependabot[bot]' && github.event.label.name == 'dependencies'
-    steps:
-      - name: Dependabot metadata
-        id: metadata
-        uses: dependabot/fetch-metadata@v2
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+    Approve:
+        runs-on: ubuntu-latest
 
-      - uses: actions/checkout@v4
-        if: contains(steps.metadata.outputs.dependency-names, env.OXLINT_PACKAGE_NAME)
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
+        if: ${{ github.actor == 'dependabot[bot]' }}
 
-      - name: Install pnpm
-        if: contains(steps.metadata.outputs.dependency-names, env.OXLINT_PACKAGE_NAME)
-        uses: pnpm/action-setup@v2
+        steps:
+            - uses: dependabot/fetch-metadata@v2.1.0
+              with:
+                  github-token: "${{ secrets.GITHUB_TOKEN }}"
 
-      - name: Set node
-        if: contains(steps.metadata.outputs.dependency-names, env.OXLINT_PACKAGE_NAME)
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: .node-version
-          cache: pnpm
-          registry-url: 'https://registry.npmjs.org'
+            - run: gh pr review --approve "$PR_URL"
+              env:
+                  PR_URL: ${{github.event.pull_request.html_url}}
+                  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-      - name: Install Dependencies
-        if: contains(steps.metadata.outputs.dependency-names, env.OXLINT_PACKAGE_NAME)
-        run: pnpm i
+    Merge:
+        runs-on: ubuntu-latest
 
-      - name: Bump oxlint rules
-        if: contains(steps.metadata.outputs.dependency-names, env.OXLINT_PACKAGE_NAME)
-        run: |
-          # Generate rules from latest oxlint
-          pnpm run generate
+        if: ${{ github.actor == 'dependabot[bot]' }}
 
-          # Update test snapshots
-          pnpm run test -u
+        steps:
+            - uses: dependabot/fetch-metadata@v2.1.0
+              with:
+                  github-token: "${{ secrets.GITHUB_TOKEN }}"
 
-          # Commit and push changes
-          git config --global user.name "dependabot[bot]"
-          git config --global user.email "49699333+dependabot[bot]@users.noreply.github.com"
-          git commit -am "feat(oxlint): bump oxlint rules"
-          git push
-
-          # Edit title message for changelog purpose
-          gh pr edit "$PR_URL" --title "feat(oxlint): bump oxlint rules"
-        env:
-          PR_URL: ${{github.event.pull_request.html_url}}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+            - run: gh pr merge --auto --merge "$PR_URL"
+              env:
+                  PR_URL: ${{github.event.pull_request.html_url}}
+                  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
