@@ -1,5 +1,5 @@
 import shell from 'shelljs';
-import fs from 'node:fs';
+import fs from 'fs';
 import { TARGET_DIRECTORY, SPARSE_CLONE_DIRECTORY } from './constants.js';
 import { getLatestVersionFromClonedRepo } from './oxlint-version.js';
 

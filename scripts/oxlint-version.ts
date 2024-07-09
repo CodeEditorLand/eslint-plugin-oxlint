@@ -1,6 +1,6 @@
 import shell from 'shelljs';
 import { VERSION_PREFIX } from './constants.js';
-import fs from 'node:fs';
+import fs from 'fs';
 
 export function getLatestVersionFromClonedRepo(
   targetDirectory: string,

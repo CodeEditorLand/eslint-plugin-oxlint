@@ -1,5 +1,5 @@
-import { writeFileSync } from 'node:fs';
-import path from 'node:path';
+import { writeFileSync } from 'fs';
+import path from 'path';
 import { getLatestVersionFromClonedRepo } from './oxlint-version.js';
 import { TARGET_DIRECTORY, VERSION_PREFIX } from './constants.js';
 import type { Rule } from './traverse-rules.js';

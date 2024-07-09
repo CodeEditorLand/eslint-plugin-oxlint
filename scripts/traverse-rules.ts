@@ -1,5 +1,5 @@
-import { promises } from 'node:fs';
-import path from 'node:path';
+import { promises } from 'fs';
+import path from 'path';
 import {
   ignoreScope,
   prefixScope,
