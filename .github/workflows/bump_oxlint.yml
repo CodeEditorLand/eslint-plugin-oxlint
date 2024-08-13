@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        required: false
+        required: true
         type: string
 
 env:
@@ -31,15 +31,16 @@ jobs:
           pnpm run clone
           pnpm run generate # Generate rules from latest oxlint
           pnpm run test -u # Update test snapshots
+          npm version ${{ inputs.version }} --no-git-tag-version
 
       - uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: Release ${{ inputs.version }}
+          commit-message: 'release: v${{ inputs.version }}'
           committer: Boshen <Boshen@users.noreply.github.com>
           author: Boshen <Boshen@users.noreply.github.com>
           branch: release
           branch-suffix: timestamp
-          title: Release ${{ inputs.version }}
+          title: 'release: v${{ inputs.version }}'
           assignees: Boshen
           base: main
