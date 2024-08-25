@@ -5,13 +5,13 @@
 	"description": "Turn off all rules already supported by oxlint",
 	"devDependencies": {
 		"@oxc-node/core": "0.0.14",
-		"@types/node": "22.0.0",
+		"@types/node": "22.5.0",
 		"@types/shelljs": "0.8.15",
-		"bumpp": "9.4.1",
+		"bumpp": "9.5.2",
 		"dedent": "1.5.3",
-		"lint-staged": "15.2.5",
-		"memfs": "4.9.2",
-		"oxlint": "0.6.1",
+		"lint-staged": "15.2.9",
+		"memfs": "5.0.0-next.1",
+		"oxlint": "0.8.0",
 		"shelljs": "0.8.5"
 	},
 	"exports": {
