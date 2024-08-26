@@ -10,7 +10,7 @@
 		"bumpp": "9.5.2",
 		"dedent": "1.5.3",
 		"lint-staged": "15.2.9",
-		"memfs": "5.0.0-next.1",
+		"memfs": "4.11.1",
 		"oxlint": "0.8.0",
 		"shelljs": "0.8.5"
 	},
