@@ -9,13 +9,13 @@ Turn off all rules already supported by `oxlint`. The rules are extracted from [
 
 See https://oxc.rs/blog/2023-12-12-announcing-oxlint.html
 
-## 🚀 Installation
+## Installation
 
 ```shell
 pnpm add eslint-plugin-oxlint --D
 ```
 
-## 🛠️ Usage
+## Usage
 
 ### Flat config
 
