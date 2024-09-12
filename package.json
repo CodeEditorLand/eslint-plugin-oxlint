@@ -11,7 +11,7 @@
 		"dedent": "^1.5.3",
 		"lint-staged": "^15.2.5",
 		"memfs": "^4.9.2",
-		"oxlint": "^0.9.5",
+		"oxlint": "^0.6.1",
 		"shelljs": "^0.8.5"
 	},
 	"exports": {
