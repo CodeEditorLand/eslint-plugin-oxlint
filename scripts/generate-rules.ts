@@ -1,6 +1,7 @@
 import { writeFileSync } from "fs";
 import path from "path";
 import axios from "axios";
+
 import { getLatestOxlintVersion } from "./oxlint-version.js";
 
 const __dirname = new URL(".", import.meta.url).pathname;
