@@ -1,9 +1,11 @@
 # eslint-plugin-oxlint
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/oxc-project/eslint-plugin-oxlint/.github%2Fworkflows%2Ftest.yml?branch=main)
-![NPM Version](https://img.shields.io/npm/v/eslint-plugin-oxlint) ![NPM Downloads](https://img.shields.io/npm/dm/eslint-plugin-oxlint)
+![NPM Version](https://img.shields.io/npm/v/eslint-plugin-oxlint)
+![NPM Downloads](https://img.shields.io/npm/dm/eslint-plugin-oxlint)
 
-Turn off all rules already supported by `oxlint`. The rules are extracted from [here](https://github.com/oxc-project/oxc/blob/main/crates/oxc_linter/src/rules.rs).
+Turn off all rules already supported by `oxlint`. The rules are extracted from
+[here](https://github.com/oxc-project/oxc/blob/main/crates/oxc_linter/src/rules.rs).
 
 ## What is oxlint?
 
@@ -19,7 +21,9 @@ pnpm add eslint-plugin-oxlint --D
 
 ### Flat config
 
-This plugin is optimized for flat config usage (eslint >= 9.0). See [here](https://eslint.org/docs/latest/use/configure/configuration-files-new) for more details.
+This plugin is optimized for flat config usage (eslint >= 9.0). See
+[here](https://eslint.org/docs/latest/use/configure/configuration-files-new) for
+more details.
 
 Example:
 
@@ -34,7 +38,8 @@ export default [
 
 ### Legacy config
 
-If you are using legacy configuration (eslint < 9.0), you can use the following config:
+If you are using legacy configuration (eslint < 9.0), you can use the following
+config:
 
 ```js
 // .eslintrc.js
@@ -53,9 +58,9 @@ And then you can add the following script to your `package.json`:
 
 ```json
 {
-  "scripts": {
-    "lint": "npx oxlint && npx eslint"
-  }
+	"scripts": {
+		"lint": "npx oxlint && npx eslint"
+	}
 }
 ```
 
@@ -96,7 +101,10 @@ And then you can add the following script to your `package.json`:
 
 ## VSCode Support
 
-You need to install both the [oxc](https://marketplace.visualstudio.com/items?itemName=oxc.oxc-vscode) and [eslint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) extensions
+You need to install both the
+[oxc](https://marketplace.visualstudio.com/items?itemName=oxc.oxc-vscode) and
+[eslint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+extensions
 
 ## Contributing
 
@@ -106,8 +114,8 @@ sparse clone the oxlint repository to have a local copy
 pnpm clone
 ```
 
-generates the rules from the sparse cloned Rust library, only for the latest version,
-new rules that haven't been released will not be included.
+generates the rules from the sparse cloned Rust library, only for the latest
+version, new rules that haven't been released will not be included.
 
 ```shell
 pnpm generate
