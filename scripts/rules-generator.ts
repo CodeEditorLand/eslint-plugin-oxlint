@@ -1,5 +1,7 @@
-import { writeFileSync } from "node:fs";
-import path from "node:path";
+import { writeFileSync } from 'node:fs';
+import path from 'node:path';
+import type { Rule } from './traverse-rules.js';
+import { camelCase } from 'scule';
 
 import type { Rule } from "./traverse-rules.js";
 
@@ -63,17 +65,15 @@ export class RulesGenerator {
 			exportGrouping.push(grouping);
 			const rules = rulesMap.get(grouping);
 
-			code += `const ${grouping.replace(/_(\w)/g, (_, c) =>
-				c.toUpperCase(),
-			)}Rules = {\n`;
+      code += `const ${camelCase(grouping)}Rules = {\n`;
 
-			code += rules
-				?.map((rule) => {
-					return `  '${rule.replace(/_/g, "-")}': "off"`;
-				})
-				.join(",\n");
-			code += "\n} as const\n\n";
-		}
+      code += rules
+        ?.map((rule) => {
+          return `  '${rule.replace(/_/g, '-')}': "off"`;
+        })
+        .join(',\n');
+      code += '\n} as const;\n\n';
+    }
 
 		code += "export {\n";
 		code += exportGrouping
