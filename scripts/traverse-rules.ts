@@ -110,10 +110,11 @@ async function processFile(
 			.replace(/\/\/.*$|\/\*[\S\s]*?\*\//gm, "")
 			.trim();
 
-		// Extract the keyword, correctly handling optional trailing characters
-		// since trailing commas are optional in Rust and the last keyword may not have one
-		const keywordRegex = /,\s*(\w+)\s*,?\s*$/;
-		const keywordMatch = keywordRegex.exec(cleanBlock);
+    // Extract the keyword, skipping the optional fixability metadata,
+    // and correctly handling optional trailing characters
+    // since trailing commas are optional in Rust and the last keyword may not have one
+    const keywordRegex = /,\s*(\w+)\s*,?\s*(?:(\w+)\s*,?\s*)?$/;
+    const keywordMatch = keywordRegex.exec(cleanBlock);
 
 		if (keywordMatch) {
 			successResultArray.push({
