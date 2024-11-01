@@ -6,7 +6,7 @@
 		"@types/shelljs": "0.8.15",
 		"bumpp": "9.8.0",
 		"dedent": "1.5.3",
-		"jiti": "2.3.3",
+		"jiti": "2.4.0",
 		"lint-staged": "15.2.10",
 		"memfs": "4.14.0",
 		"oxlint": "0.10.3",

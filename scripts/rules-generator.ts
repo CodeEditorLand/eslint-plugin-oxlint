@@ -15,18 +15,15 @@ export enum RulesGrouping {
 export type ResultMap = Map<string, string[]>;
 
 export class RulesGenerator {
-	private oxlintVersion: string;
-	private rulesGrouping: RulesGrouping;
-	private rulesArray: Rule[];
-	constructor(
-		oxlintVersion: string,
-		rulesArray: Rule[] = [],
-		rulesGrouping: RulesGrouping = RulesGrouping.SCOPE,
-	) {
-		this.oxlintVersion = oxlintVersion;
-		this.rulesArray = rulesArray;
-		this.rulesGrouping = rulesGrouping;
-	}
+  private rulesGrouping: RulesGrouping;
+  private rulesArray: Rule[];
+  constructor(
+    rulesArray: Rule[] = [],
+    rulesGrouping: RulesGrouping = RulesGrouping.SCOPE
+  ) {
+    this.rulesArray = rulesArray;
+    this.rulesGrouping = rulesGrouping;
+  }
 
 	public setRulesGrouping(rulesGrouping: RulesGrouping) {
 		this.rulesGrouping = rulesGrouping;
@@ -47,10 +44,8 @@ export class RulesGenerator {
 		return map;
 	}
 
-	public async generateRulesCode() {
-		console.log(
-			`Generating rules for ${this.oxlintVersion}, grouped by ${this.rulesGrouping}`,
-		);
+  public async generateRulesCode() {
+    console.log(`Generating rules, grouped by ${this.rulesGrouping}`);
 
 		const rulesGrouping = this.rulesGrouping;
 		const rulesArray = this.rulesArray;
