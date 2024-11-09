@@ -3,10 +3,6 @@ import path from 'node:path';
 import type { Rule } from './traverse-rules.js';
 import { camelCase } from 'scule';
 
-import type { Rule } from "./traverse-rules.js";
-
-const __dirname = new URL(".", import.meta.url).pathname;
-
 export enum RulesGrouping {
 	CATEGORY = "category",
 	SCOPE = "scope",
@@ -64,32 +60,28 @@ export class RulesGenerator {
 
       code += rules
         ?.map((rule) => {
-          return `  '${rule.replace(/_/g, '-')}': "off"`;
+          return `  '${rule.replaceAll('_', '-')}': "off"`;
         })
         .join(',\n');
       code += '\n} as const;\n\n';
     }
 
-		code += "export {\n";
-		code += exportGrouping
-			.map((grouping) => {
-				return `  ${grouping.replace(/_(\w)/g, (_, c) => c.toUpperCase())}Rules`;
-			})
-			.join(",\n");
-		code += "\n}";
+    code += 'export {\n';
+    code += exportGrouping
+      .map((grouping) => {
+        return `  ${grouping.replaceAll(/_(\w)/g, (_, c) => c.toUpperCase())}Rules`;
+      })
+      .join(',\n');
+    code += '\n}';
 
 		return code;
 	}
 
-	public async generateRules() {
-		const output = await this.generateRulesCode();
-		writeFileSync(
-			path.resolve(
-				__dirname,
-				"..",
-				`src/rules-by-${this.rulesGrouping}.ts`,
-			),
-			output,
-		);
-	}
+  public async generateRules(folderPath: string) {
+    const output = await this.generateRulesCode();
+    writeFileSync(
+      path.resolve(folderPath, `rules-by-${this.rulesGrouping}.ts`),
+      output
+    );
+  }
 }

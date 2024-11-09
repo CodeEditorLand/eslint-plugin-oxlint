@@ -6,12 +6,12 @@ import tseslint from "typescript-eslint";
 import oxlint from "./src/index.js";
 
 export default [
-	eslint.configs.recommended,
-	unicorn.configs["flat/recommended"],
-	...tseslint.configs.recommended,
-	eslintConfigPrettier,
-	oxlint.configs["flat/all"],
-	{
-		ignores: ["dist/"],
-	},
+  {
+    ignores: ['dist/'],
+  },
+  eslint.configs.recommended,
+  unicorn.configs['flat/recommended'],
+  ...tseslint.configs.recommended,
+  eslintConfigPrettier,
+  ...oxlint.buildFromOxlintConfigFile('oxlint.json'),
 ];
