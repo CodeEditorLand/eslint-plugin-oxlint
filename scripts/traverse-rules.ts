@@ -30,6 +30,7 @@ export async function readFilesRecursively(
 
 	for (const entry of entries) {
 		const entryPath = path.join(directory, entry.name);
+
 		if (entry.isDirectory()) {
 			await readFilesRecursively(
 				entryPath,
@@ -131,6 +132,7 @@ async function processFile(
     // and correctly handling optional trailing characters
     // since trailing commas are optional in Rust and the last keyword may not have one
     const keywordRegex = /,\s*(\w+)\s*,?\s*(?:(\w+)\s*,?\s*)?$/;
+
     const keywordMatch = keywordRegex.exec(cleanBlock);
 
 		if (keywordMatch) {
@@ -166,6 +168,7 @@ async function processFile(
 
 export function getFolderNameUnderRules(filePath: string) {
 	const sourceIndex = filePath.indexOf("/rules/");
+
 	if (sourceIndex === -1) {
 		return ""; // 'rules' directory not found
 	}
@@ -175,6 +178,7 @@ export function getFolderNameUnderRules(filePath: string) {
 
 	// Find the next '/' to isolate the folder name directly under 'src'
 	const nextSlashIndex = subPath.indexOf("/");
+
 	if (nextSlashIndex === -1) {
 		return subPath; // Return the remaining path if there's no additional '/'
 	}
@@ -197,7 +201,9 @@ export async function traverseRules(): Promise<{
 	failureResultArray: Rule[];
 }> {
 	const successResultArray: Rule[] = [];
+
 	const skippedResultArray: Rule[] = [];
+
 	const failureResultArray: Rule[] = [];
 
 	const startDirectory = path.join(

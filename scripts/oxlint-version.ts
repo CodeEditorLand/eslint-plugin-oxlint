@@ -24,14 +24,18 @@ export function getLatestVersionFromClonedRepo(
 		.split("\n");
 
 	let latestVersion = oxlintTags[0];
+
 	for (let index = 1; index < oxlintTags.length; index++) {
 		const current = oxlintTags[index];
+
 		const latestNumber = Number.parseInt(
 			latestVersion.replace(versionPrefix, ""),
 		);
+
 		const currentNumber = Number.parseInt(
 			current.replace(versionPrefix, ""),
 		);
+
 		if (currentNumber > latestNumber) {
 			latestVersion = current;
 		}

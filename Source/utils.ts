@@ -8,6 +8,7 @@ export function createFlatRulesConfig(rulesModule: { [key: string]: unknown }) {
 		if (key.endsWith("Rules")) {
 			// Ensure the property is a rules set
 			const ruleName = kebabCase(key.replace("Rules", ""));
+
 			const flatKey = `flat/${ruleName}`; // Create the new key
 			flatRulesConfig[flatKey] = {
 				name: `oxlint/${ruleName}`,

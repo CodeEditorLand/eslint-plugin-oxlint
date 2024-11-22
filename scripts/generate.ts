@@ -15,6 +15,7 @@ if (failureResultArray.length > 0) {
 }
 
 const rulesGenerator = new RulesGenerator(successResultArray);
+
 const configGenerator = new ConfigGenerator(successResultArray);
 
 const generateFolder = path.resolve(__dirname, '..', `src/generated`);

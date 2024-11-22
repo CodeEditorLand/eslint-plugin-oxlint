@@ -10,6 +10,7 @@ import {
 const allRulesObjects = Object.values(configByCategory).map(
   (config) => config.rules
 );
+
 const allRules: string[] = allRulesObjects.flatMap((rulesObject) =>
   Object.keys(rulesObject)
 );
@@ -68,6 +69,7 @@ const getConfigContent = (
     console.error(
       `eslint-plugin-oxlint: could not find oxlint config file: ${oxlintConfigFile}`
     );
+
     return undefined;
   }
 };
