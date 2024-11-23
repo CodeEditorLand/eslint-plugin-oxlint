@@ -2,15 +2,15 @@ import { promises } from "node:fs";
 import path from "node:path";
 
 import {
-  ignoreScope,
-  prefixScope,
-  SPARSE_CLONE_DIRECTORY,
-  TARGET_DIRECTORY,
-} from './constants.js';
+	reactHookRulesInsideReactScope,
+	typescriptRulesExtendEslintRules,
+} from "../src/constants.js";
 import {
-  reactHookRulesInsideReactScope,
-  typescriptRulesExtendEslintRules,
-} from '../src/constants.js';
+	ignoreScope,
+	prefixScope,
+	SPARSE_CLONE_DIRECTORY,
+	TARGET_DIRECTORY,
+} from "./constants.js";
 
 // Recursive function to read files in a directory, this currently assumes that the directory
 // structure is semi-consistent within the oxc_linter crate
@@ -77,28 +77,28 @@ async function processFile(
 
 	let match = blockRegex.exec(content);
 
-  // 'ok' way to get the scope, depends on the directory structure
-  let scope = getFolderNameUnderRules(filePath);
-  const shouldIgnoreRule = ignoreScope.has(scope);
+	// 'ok' way to get the scope, depends on the directory structure
+	let scope = getFolderNameUnderRules(filePath);
+	const shouldIgnoreRule = ignoreScope.has(scope);
 
-  // when the file is called `mod.rs` we want to use the parent directory name as the rule name
-  // Note that this is fairly brittle, as relying on the directory structure can be risky
-  const ruleNameWithoutScope = getFileNameWithoutExtension(
-    filePath,
-    currentDirectory
-  ).replaceAll('_', '-');
+	// when the file is called `mod.rs` we want to use the parent directory name as the rule name
+	// Note that this is fairly brittle, as relying on the directory structure can be risky
+	const ruleNameWithoutScope = getFileNameWithoutExtension(
+		filePath,
+		currentDirectory,
+	).replaceAll("_", "-");
 
-  // All rules from `eslint-plugin-react-hooks`
-  // Since oxlint supports these rules under react/*, we need to remap them.
-  if (
-    scope === 'react' &&
-    reactHookRulesInsideReactScope.includes(ruleNameWithoutScope)
-  ) {
-    scope = 'react_hooks';
-  }
+	// All rules from `eslint-plugin-react-hooks`
+	// Since oxlint supports these rules under react/*, we need to remap them.
+	if (
+		scope === "react" &&
+		reactHookRulesInsideReactScope.includes(ruleNameWithoutScope)
+	) {
+		scope = "react_hooks";
+	}
 
-  const effectiveRuleName =
-    `${prefixScope(scope)}${ruleNameWithoutScope}`.replaceAll('_', '-');
+	const effectiveRuleName =
+		`${prefixScope(scope)}${ruleNameWithoutScope}`.replaceAll("_", "-");
 
 	// add the rule to the skipped array and continue to see if there's a match regardless
 	if (shouldIgnoreRule) {
@@ -123,17 +123,17 @@ async function processFile(
 	while (match !== null) {
 		const block = match[2] ?? match[3];
 
-    // Remove comments to prevent them from affecting the regex
-    const cleanBlock = block
-      .replaceAll(/\/\/.*$|\/\*[\S\s]*?\*\//gm, '')
-      .trim();
+		// Remove comments to prevent them from affecting the regex
+		const cleanBlock = block
+			.replaceAll(/\/\/.*$|\/\*[\S\s]*?\*\//gm, "")
+			.trim();
 
-    // Extract the keyword, skipping the optional fixability metadata,
-    // and correctly handling optional trailing characters
-    // since trailing commas are optional in Rust and the last keyword may not have one
-    const keywordRegex = /,\s*(\w+)\s*,?\s*(?:(\w+)\s*,?\s*)?$/;
+		// Extract the keyword, skipping the optional fixability metadata,
+		// and correctly handling optional trailing characters
+		// since trailing commas are optional in Rust and the last keyword may not have one
+		const keywordRegex = /,\s*(\w+)\s*,?\s*(?:(\w+)\s*,?\s*)?$/;
 
-    const keywordMatch = keywordRegex.exec(cleanBlock);
+		const keywordMatch = keywordRegex.exec(cleanBlock);
 
 		if (keywordMatch) {
 			successResultArray.push({

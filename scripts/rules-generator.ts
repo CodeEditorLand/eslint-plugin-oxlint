@@ -1,7 +1,8 @@
-import { writeFile } from 'node:fs/promises';
-import path from 'node:path';
-import type { Rule } from './traverse-rules.js';
-import { camelCase } from 'scule';
+import { writeFile } from "node:fs/promises";
+import path from "node:path";
+import { camelCase } from "scule";
+
+import type { Rule } from "./traverse-rules.js";
 
 export enum RulesGrouping {
 	CATEGORY = "category",
@@ -11,15 +12,15 @@ export enum RulesGrouping {
 export type ResultMap = Map<string, string[]>;
 
 export class RulesGenerator {
-  private rulesGrouping: RulesGrouping;
-  private rulesArray: Rule[];
-  constructor(
-    rulesArray: Rule[] = [],
-    rulesGrouping: RulesGrouping = RulesGrouping.SCOPE
-  ) {
-    this.rulesArray = rulesArray;
-    this.rulesGrouping = rulesGrouping;
-  }
+	private rulesGrouping: RulesGrouping;
+	private rulesArray: Rule[];
+	constructor(
+		rulesArray: Rule[] = [],
+		rulesGrouping: RulesGrouping = RulesGrouping.SCOPE,
+	) {
+		this.rulesArray = rulesArray;
+		this.rulesGrouping = rulesGrouping;
+	}
 
 	public setRulesGrouping(rulesGrouping: RulesGrouping) {
 		this.rulesGrouping = rulesGrouping;
@@ -42,8 +43,8 @@ export class RulesGenerator {
 		return map;
 	}
 
-  public generateRulesCode() {
-    console.log(`Generating rules, grouped by ${this.rulesGrouping}`);
+	public generateRulesCode() {
+		console.log(`Generating rules, grouped by ${this.rulesGrouping}`);
 
 		const rulesGrouping = this.rulesGrouping;
 
@@ -61,33 +62,33 @@ export class RulesGenerator {
 
 			const rules = rulesMap.get(grouping);
 
-      code += `const ${camelCase(grouping)}Rules = {\n`;
+			code += `const ${camelCase(grouping)}Rules = {\n`;
 
-      code += rules
-        ?.map((rule) => {
-          return `  '${rule.replaceAll('_', '-')}': "off"`;
-        })
-        .join(',\n');
-      code += '\n} as const;\n\n';
-    }
+			code += rules
+				?.map((rule) => {
+					return `  '${rule.replaceAll("_", "-")}': "off"`;
+				})
+				.join(",\n");
+			code += "\n} as const;\n\n";
+		}
 
-    code += 'export {\n';
-    code += exportGrouping
-      .map((grouping) => {
-        return `  ${grouping.replaceAll(/_(\w)/g, (_, c) => c.toUpperCase())}Rules`;
-      })
-      .join(',\n');
-    code += '\n}';
+		code += "export {\n";
+		code += exportGrouping
+			.map((grouping) => {
+				return `  ${grouping.replaceAll(/_(\w)/g, (_, c) => c.toUpperCase())}Rules`;
+			})
+			.join(",\n");
+		code += "\n}";
 
 		return code;
 	}
 
-  public generateRules(folderPath: string): Promise<void> {
-    const output = this.generateRulesCode();
+	public generateRules(folderPath: string): Promise<void> {
+		const output = this.generateRulesCode();
 
-    return writeFile(
-      path.resolve(folderPath, `rules-by-${this.rulesGrouping}.ts`),
-      output
-    );
-  }
+		return writeFile(
+			path.resolve(folderPath, `rules-by-${this.rulesGrouping}.ts`),
+			output,
+		);
+	}
 }
