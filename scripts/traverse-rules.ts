@@ -2,9 +2,12 @@ import { promises } from "node:fs";
 import path from "node:path";
 
 import {
-	reactHookRulesInsideReactScope,
-	typescriptRulesExtendEslintRules,
-} from "../src/constants.js";
+  ignoreCategories,
+  ignoreScope,
+  prefixScope,
+  SPARSE_CLONE_DIRECTORY,
+  TARGET_DIRECTORY,
+} from './constants.js';
 import {
 	ignoreScope,
 	prefixScope,
@@ -28,29 +31,30 @@ export async function readFilesRecursively(
 		(entry) => entry.isFile() && entry.name === "mod.rs",
 	);
 
-	for (const entry of entries) {
-		const entryPath = path.join(directory, entry.name);
-
-		if (entry.isDirectory()) {
-			await readFilesRecursively(
-				entryPath,
-				successResultArray,
-				skippedResultArray,
-				failureResultArray,
-			); // Recursive call for directories
-		} else if (
-			entry.isFile() &&
-			(!containsModRs || entry.name === "mod.rs")
-		) {
-			await processFile(
-				entryPath,
-				directory,
-				successResultArray,
-				skippedResultArray,
-				failureResultArray,
-			); // Process each file
-		}
-	}
+  await Promise.all(
+    entries.map(async (entry) => {
+      const entryPath = path.join(directory, entry.name);
+      if (entry.isDirectory()) {
+        await readFilesRecursively(
+          entryPath,
+          successResultArray,
+          skippedResultArray,
+          failureResultArray
+        ); // Recursive call for directories
+      } else if (
+        entry.isFile() &&
+        (!containsModRs || entry.name === 'mod.rs')
+      ) {
+        await processFile(
+          entryPath,
+          directory,
+          successResultArray,
+          skippedResultArray,
+          failureResultArray
+        ); // Process each file
+      }
+    })
+  );
 }
 
 export interface Rule {
@@ -70,16 +74,9 @@ async function processFile(
 ): Promise<void> {
 	const content = await promises.readFile(filePath, "utf8");
 
-	// find the correct macro block where `);` or `}` is the end of the block
-	// ensure that the `);` or `}` is on its own line, with no characters before it
-	const blockRegex =
-		/declare_oxc_lint!\s*(\(([\S\s]*?)^\s*\)\s*;?|\s*{([\S\s]*?)^\s*}\s)/gm;
-
-	let match = blockRegex.exec(content);
-
-	// 'ok' way to get the scope, depends on the directory structure
-	let scope = getFolderNameUnderRules(filePath);
-	const shouldIgnoreRule = ignoreScope.has(scope);
+  // 'ok' way to get the scope, depends on the directory structure
+  let scope = getFolderNameUnderRules(filePath);
+  const shouldIgnoreRule = ignoreScope.has(scope);
 
 	// when the file is called `mod.rs` we want to use the parent directory name as the rule name
 	// Note that this is fairly brittle, as relying on the directory structure can be risky
@@ -111,17 +108,25 @@ async function processFile(
 		return;
 	}
 
-	if (match === null) {
-		failureResultArray.push({
-			value: effectiveRuleName,
-			scope: scope,
-			category: "unknown",
-			error: "No match block for `declare_oxc_lint`",
-		});
-	}
+  // find the correct macro block where `);` or `}` is the end of the block
+  // ensure that the `);` or `}` is on its own line, with no characters before it
+  const blockRegex =
+    /declare_oxc_lint!\s*(\(([\S\s]*?)^\s*\)\s*;?|\s*{([\S\s]*?)^\s*}\s)/gm;
 
-	while (match !== null) {
-		const block = match[2] ?? match[3];
+  let match = blockRegex.exec(content);
+
+  if (match === null) {
+    failureResultArray.push({
+      value: effectiveRuleName,
+      scope: scope,
+      category: 'unknown',
+      error: 'No match block for `declare_oxc_lint`',
+    });
+    return;
+  }
+
+  do {
+    const block = match[2] ?? match[3];
 
 		// Remove comments to prevent them from affecting the regex
 		const cleanBlock = block
@@ -133,37 +138,43 @@ async function processFile(
 		// since trailing commas are optional in Rust and the last keyword may not have one
 		const keywordRegex = /,\s*(\w+)\s*,?\s*(?:(\w+)\s*,?\s*)?$/;
 
-		const keywordMatch = keywordRegex.exec(cleanBlock);
+    if (!keywordMatch) {
+      failureResultArray.push({
+        value: effectiveRuleName,
+        scope: `unknown: ${scope}`,
+        category: 'unknown',
+        error: 'Could not extract keyword from macro block',
+      });
+      continue;
+    }
 
-		if (keywordMatch) {
-			successResultArray.push({
-				value: effectiveRuleName,
-				scope: scope,
-				category: keywordMatch[1],
-			});
+    if (ignoreCategories.has(keywordMatch[1])) {
+      skippedResultArray.push({
+        value: effectiveRuleName,
+        scope: scope,
+        category: keywordMatch[1],
+      });
+      continue;
+    }
 
-			if (scope === "eslint") {
-				const ruleName = effectiveRuleName.replace(/^.*\//, "");
+    successResultArray.push({
+      value: effectiveRuleName,
+      scope: scope,
+      category: keywordMatch[1],
+    });
 
-				if (typescriptRulesExtendEslintRules.includes(ruleName)) {
-					successResultArray.push({
-						value: `@typescript-eslint/${ruleName}`,
-						scope: "typescript",
-						category: keywordMatch[1],
-					});
-				}
-			}
-		} else {
-			failureResultArray.push({
-				value: effectiveRuleName,
-				scope: `unknown: ${scope}`,
-				category: "unknown",
-				error: "Could not extract keyword from macro block",
-			});
-		}
+    if (scope === 'eslint') {
+      const ruleName = effectiveRuleName.replace(/^.*\//, '');
 
-		match = blockRegex.exec(content); // Update match for the next iteration
-	}
+      if (typescriptRulesExtendEslintRules.includes(ruleName)) {
+        successResultArray.push({
+          value: `@typescript-eslint/${ruleName}`,
+          scope: 'typescript',
+          category: keywordMatch[1],
+        });
+      }
+    }
+  } while ((match = blockRegex.exec(content)));
 }
 
 export function getFolderNameUnderRules(filePath: string) {
@@ -206,11 +217,19 @@ export async function traverseRules(): Promise<{
 
 	const failureResultArray: Rule[] = [];
 
-	const startDirectory = path.join(
-		TARGET_DIRECTORY,
-		SPARSE_CLONE_DIRECTORY,
-		"rules",
-	);
+  successResultArray.sort((aRule, bRule) => {
+    const scopeCompare = aRule.scope.localeCompare(bRule.scope);
+
+    if (scopeCompare !== 0) {
+      return scopeCompare;
+    }
+
+    return aRule.value.localeCompare(bRule.value);
+  });
+
+  console.log(
+    `>> Parsed ${successResultArray.length} rules, skipped ${skippedResultArray.length} and encountered ${failureResultArray.length} failures\n`
+  );
 
 	await readFilesRecursively(
 		startDirectory,
