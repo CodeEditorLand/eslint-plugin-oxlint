@@ -5,7 +5,9 @@ import { aliasPluginNames } from "../src/constants.js";
 const __dirname = new URL(".", import.meta.url).pathname;
 
 export const TARGET_DIRECTORY = path.resolve(__dirname, "..", ".oxc_sparse");
+
 export const VERSION_PREFIX = "oxlint_v";
+
 export const SPARSE_CLONE_DIRECTORY = "crates/oxc_linter/src";
 
 // these are the rules that don't have a direct equivalent in the eslint rules
