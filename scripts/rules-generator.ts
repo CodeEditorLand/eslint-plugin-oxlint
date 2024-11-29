@@ -13,12 +13,15 @@ export type ResultMap = Map<string, string[]>;
 
 export class RulesGenerator {
 	private rulesGrouping: RulesGrouping;
+
 	private rulesArray: Rule[];
+
 	constructor(
 		rulesArray: Rule[] = [],
 		rulesGrouping: RulesGrouping = RulesGrouping.SCOPE,
 	) {
 		this.rulesArray = rulesArray;
+
 		this.rulesGrouping = rulesGrouping;
 	}
 
@@ -36,7 +39,9 @@ export class RulesGenerator {
 			const key = item[rulesGrouping];
 
 			const group = map.get(key) || [];
+
 			group.push(item.value);
+
 			map.set(key, group);
 		}
 
@@ -69,15 +74,18 @@ export class RulesGenerator {
 					return `  '${rule.replaceAll("_", "-")}': "off"`;
 				})
 				.join(",\n");
+
 			code += "\n} as const;\n\n";
 		}
 
 		code += "export {\n";
+
 		code += exportGrouping
 			.map((grouping) => {
 				return `  ${grouping.replaceAll(/_(\w)/g, (_, c) => c.toUpperCase())}Rules`;
 			})
 			.join(",\n");
+
 		code += "\n}";
 
 		return code;

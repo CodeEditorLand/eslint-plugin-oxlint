@@ -59,8 +59,11 @@ export async function readFilesRecursively(
 
 export interface Rule {
 	value: string;
+
 	scope: string;
+
 	category: string;
+
 	error?: string;
 }
 
@@ -124,6 +127,7 @@ async function processFile(
       category: 'unknown',
       error: 'No match block for `declare_oxc_lint`',
     });
+
     return;
   }
 
@@ -145,6 +149,7 @@ async function processFile(
       category: 'unknown',
       error: 'Could not extract keyword from macro block',
     });
+
     return;
   }
 
@@ -154,6 +159,7 @@ async function processFile(
       scope: scope,
       category: keywordMatch[1],
     });
+
     return;
   }
 
@@ -207,7 +213,9 @@ export function getFileNameWithoutExtension(
 
 export async function traverseRules(): Promise<{
 	successResultArray: Rule[];
+
 	skippedResultArray: Rule[];
+
 	failureResultArray: Rule[];
 }> {
 	const successResultArray: Rule[] = [];

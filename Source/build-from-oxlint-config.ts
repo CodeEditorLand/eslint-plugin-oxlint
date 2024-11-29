@@ -23,8 +23,11 @@ type OxlintConfigRules = Record<string, unknown>;
 
 type OxlintConfig = {
 	[key: string]: unknown;
+
 	plugins?: OxlintConfigPlugins;
+
 	categories?: OxlintConfigCategories;
+
 	rules?: OxlintConfigRules;
 };
 
@@ -63,12 +66,14 @@ const getConfigContent = (
 			console.error(
 				`eslint-plugin-oxlint: could not parse oxlint config file: ${oxlintConfigFile}`,
 			);
+
 			return undefined;
 		}
 	} catch {
 		console.error(
 			`eslint-plugin-oxlint: could not find oxlint config file: ${oxlintConfigFile}`,
 		);
+
 		return undefined;
 	}
 };
@@ -131,6 +136,7 @@ const getEsLintRuleName = (rule: string): string | undefined => {
 	}
 
 	const pluginName = match[1];
+
 	const ruleName = match[2];
 
 	// map to the right eslint plugin
@@ -168,6 +174,7 @@ const handleRulesScope = (
 			console.warn(
 				`eslint-plugin-oxlint: could not find matching eslint rule for "${rule}"`,
 			);
+
 			continue;
 		}
 
@@ -243,6 +250,7 @@ export const buildFromOxlintConfig = (
 	config: OxlintConfig,
 ): Linter.Config<Record<string, "off">>[] => {
 	const rules: Record<string, "off"> = {};
+
 	const plugins = readPluginsFromConfig(config) ?? defaultPlugins;
 
 	// it is not a plugin but it is activated by default

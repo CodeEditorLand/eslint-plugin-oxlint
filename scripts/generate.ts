@@ -27,8 +27,11 @@ if (!fs.existsSync(generateFolder)) {
 
 const promises = [rulesGenerator, configGenerator].map(async (generator) => {
 	generator.setRulesGrouping(RulesGrouping.SCOPE);
+
 	await generator.generateRules(generateFolder);
+
 	generator.setRulesGrouping(RulesGrouping.CATEGORY);
+
 	await generator.generateRules(generateFolder);
 });
 

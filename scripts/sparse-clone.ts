@@ -28,12 +28,14 @@ function configureSparseCheckout(cloneDirectory: string) {
 		shell.exec("git sparse-checkout init --cone").code !== 0
 	) {
 		shell.echo("Error: Failed to initialize sparse-checkout");
+
 		shell.exit(1);
 	}
 
 	// Set the directory to be checked out
 	if (shell.exec(`git sparse-checkout set ${cloneDirectory}`).code !== 0) {
 		shell.echo("Error: Failed to configure sparse-checkout");
+
 		shell.exit(1);
 	}
 }
@@ -44,6 +46,7 @@ function checkoutVersionTag(version: string) {
 	// Checkout the specified directory
 	if (shell.exec(`git checkout ${tag}`, { silent: true }).code !== 0) {
 		shell.echo("Error: Git checkout failed");
+
 		shell.exit(1);
 	}
 
@@ -67,6 +70,7 @@ function cloneOrUpdateRepo(
 		shell.cd(targetDirectory);
 
 		configureSparseCheckout(cloneDirectory);
+
 		checkoutVersionTag(version);
 	} else {
 		console.log(`Cloning new repository into ${targetDirectory}...`);
@@ -78,12 +82,14 @@ function cloneOrUpdateRepo(
 			).code !== 0
 		) {
 			shell.echo("Error: Git clone failed");
+
 			shell.exit(1);
 		}
 
 		shell.cd(targetDirectory);
 
 		configureSparseCheckout(cloneDirectory);
+
 		checkoutVersionTag(version);
 	}
 }

@@ -13,12 +13,15 @@ export type ResultMap = Map<string, string[]>;
 
 export class ConfigGenerator {
 	private rulesGrouping: RulesGrouping;
+
 	private rulesArray: Rule[];
+
 	constructor(
 		rulesArray: Rule[] = [],
 		rulesGrouping: RulesGrouping = RulesGrouping.SCOPE,
 	) {
 		this.rulesArray = rulesArray;
+
 		this.rulesGrouping = rulesGrouping;
 	}
 
@@ -63,16 +66,20 @@ export class ConfigGenerator {
 			code += `const ${camelCase(grouping)}Config = {\n`;
 
 			code += `  name: 'oxlint/${kebabCase(grouping)}',\n`;
+
 			code += `  rules: rules.${camelCase(grouping)}Rules,`;
+
 			code += "\n};\n\n";
 		}
 
 		code += `const configBy${exportName} =  {\n`;
+
 		code += exportGrouping
 			.map((grouping) => {
 				return `  'flat/${kebabCase(grouping)}': ${camelCase(grouping)}Config`;
 			})
 			.join(",\n");
+
 		code += "\n}\n\n";
 
 		code += `export default configBy${exportName}`;
