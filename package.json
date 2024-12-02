@@ -46,8 +46,7 @@
 	"scripts": {
 		"build": "vite build",
 		"clone": "node --import @oxc-node/core/register ./scripts/sparse-clone.ts",
-		"generate": "node --import @oxc-node/core/register ./scripts/generate.ts",
-		"prepare": "husky"
+		"generate": "node --import @oxc-node/core/register ./scripts/generate.ts"
 	},
 	"types": "./dist/index.d.ts",
 	"volta": {
