@@ -3,10 +3,11 @@ import shell from "shelljs";
 
 import { version } from "../package.json";
 import {
-	SPARSE_CLONE_DIRECTORY,
-	TARGET_DIRECTORY,
-	VERSION_PREFIX,
-} from "./constants.js";
+  TARGET_DIRECTORY,
+  SPARSE_CLONE_DIRECTORY,
+  VERSION_PREFIX,
+} from './constants.js';
+import packageJson from '../package.json' with { type: 'json' };
 
 /**
  * Run this file in CLI like `pnpm run clone`
@@ -17,7 +18,7 @@ import {
  *
  */
 
-const checkoutVersion = process.argv[2] ?? version;
+const checkoutVersion = process.argv[2] ?? packageJson.version;
 
 // Function to initialize or reconfigure sparse-checkout
 function configureSparseCheckout(cloneDirectory: string) {
