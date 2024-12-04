@@ -1,11 +1,11 @@
+import configs from './configs.js';
 import {
-	buildFromOxlintConfig,
-	buildFromOxlintConfigFile,
-} from "./build-from-oxlint-config.js";
-import configs from "./configs.js";
+  buildFromOxlintConfig,
+  buildFromOxlintConfigFile,
+} from './build-from-oxlint-config/index.js';
 
 export default {
-	configs,
-	buildFromOxlintConfig,
-	buildFromOxlintConfigFile,
+  configs,
+  buildFromOxlintConfig,
+  buildFromOxlintConfigFile,
 };
