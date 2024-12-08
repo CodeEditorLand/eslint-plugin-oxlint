@@ -1,89 +1,58 @@
 {
-  "name": "eslint-plugin-oxlint",
-  "version": "0.14.1",
-  "description": "Turn off all rules already supported by oxlint",
-  "type": "module",
-  "types": "./dist/index.d.ts",
-  "packageManager": "pnpm@9.14.4",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs",
-      "default": "./dist/index.mjs"
-    },
-    "./rules-by-category": {
-      "types": "./dist/generated/rules-by-category.d.ts",
-      "import": "./dist/generated/rules-by-category.mjs",
-      "require": "./dist/generated/rules-by-category.cjs",
-      "default": "./dist/generated/rules-by-category.mjs"
-    },
-    "./rules-by-scope": {
-      "types": "./dist/generated/rules-by-scope.d.ts",
-      "import": "./dist/generated/rules-by-scope.mjs",
-      "require": "./dist/generated/rules-by-scope.cjs",
-      "default": "./dist/generated/rules-by-scope.mjs"
-    }
-  },
-  "files": [
-    "dist",
-    "src"
-  ],
-  "author": "Dunqing <dengqing0821@gmail.com>",
-  "homepage": "https://github.com/oxc-project/eslint-plugin-oxlint",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:oxc-project/eslint-plugin-oxlint.git"
-  },
-  "license": "MIT",
-  "scripts": {
-    "prepare": "husky",
-    "generate": "node --import @oxc-node/core/register ./scripts/generate.ts",
-    "clone": "node --import @oxc-node/core/register ./scripts/sparse-clone.ts",
-    "build": "vite build",
-    "lint": "npx oxlint --tsconfig=tsconfig.json && npx eslint --flag unstable_ts_config",
-    "format": "npx prettier --write .",
-    "type-check": "tsc --noEmit",
-    "test": "vitest --reporter=verbose"
-  },
-  "keywords": [
-    "oxc",
-    "oxlint",
-    "eslint",
-    "rules"
-  ],
-  "devDependencies": {
-    "@eslint/js": "^9.13.0",
-    "@oxc-node/core": "^0.0.15",
-    "@types/eslint-config-prettier": "^6.11.3",
-    "@types/node": "^22.7.7",
-    "@types/shelljs": "^0.8.15",
-    "@vitest/coverage-v8": "^2.1.3",
-    "dedent": "^1.5.3",
-    "eslint": "^9.13.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-unicorn": "^56.0.0",
-    "husky": "^9.1.6",
-    "lint-staged": "^15.2.10",
-    "memfs": "^4.14.0",
-    "oxlint": "^0.14.1",
-    "prettier": "^3.3.3",
-    "scule": "^1.3.0",
-    "shelljs": "^0.8.5",
-    "typescript": "^5.6.3",
-    "typescript-eslint": "^8.10.0",
-    "vite": "^6.0.0",
-    "vite-plugin-dts": "^4.2.4",
-    "vitest": "^2.1.3"
-  },
-  "lint-staged": {
-    "*.{js,cjs,ts}": "eslint --flag unstable_ts_config",
-    "*": "prettier --ignore-unknown --write"
-  },
-  "volta": {
-    "node": "20.14.0"
-  },
-  "dependencies": {
-    "jsonc-parser": "^3.3.1"
-  }
+	"dependencies": {
+		"jsonc-parser": "^3.3.1"
+	},
+	"description": "Turn off all rules already supported by oxlint",
+	"devDependencies": {
+		"@oxc-node/core": "^0.0.15",
+		"@types/eslint-config-prettier": "^6.11.3",
+		"@types/node": "^22.7.7",
+		"@types/shelljs": "^0.8.15",
+		"dedent": "^1.5.3",
+		"lint-staged": "^15.2.10",
+		"memfs": "^4.14.0",
+		"oxlint": "^0.14.1",
+		"scule": "^1.3.0",
+		"shelljs": "^0.8.5"
+	},
+	"exports": {
+		".": {
+			"default": "./dist/index.mjs",
+			"import": "./dist/index.mjs",
+			"require": "./dist/index.cjs",
+			"types": "./dist/index.d.ts"
+		},
+		"./rules-by-category": {
+			"default": "./dist/generated/rules-by-category.mjs",
+			"import": "./dist/generated/rules-by-category.mjs",
+			"require": "./dist/generated/rules-by-category.cjs",
+			"types": "./dist/generated/rules-by-category.d.ts"
+		},
+		"./rules-by-scope": {
+			"default": "./dist/generated/rules-by-scope.mjs",
+			"import": "./dist/generated/rules-by-scope.mjs",
+			"require": "./dist/generated/rules-by-scope.cjs",
+			"types": "./dist/generated/rules-by-scope.d.ts"
+		}
+	},
+	"files": [
+		"dist",
+		"src"
+	],
+	"lint-staged": {
+		"*": "prettier --ignore-unknown --write",
+		"*.{js,cjs,ts}": "eslint --flag unstable_ts_config"
+	},
+	"name": "eslint-plugin-oxlint",
+	"scripts": {
+		"build": "vite build",
+		"clone": "node --import @oxc-node/core/register ./scripts/sparse-clone.ts",
+		"generate": "node --import @oxc-node/core/register ./scripts/generate.ts",
+		"prepare": "husky",
+		"type-check": "tsc --noEmit"
+	},
+	"types": "./dist/index.d.ts",
+	"volta": {
+		"node": "20.14.0"
+	}
 }
