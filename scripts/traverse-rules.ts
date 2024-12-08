@@ -9,11 +9,10 @@ import {
   TARGET_DIRECTORY,
 } from './constants.js';
 import {
-	ignoreScope,
-	prefixScope,
-	SPARSE_CLONE_DIRECTORY,
-	TARGET_DIRECTORY,
-} from "./constants.js";
+  reactHookRulesInsideReactScope,
+  typescriptRulesExtendEslintRules,
+  viteTestCompatibleRules,
+} from '../src/constants.js';
 
 // Recursive function to read files in a directory, this currently assumes that the directory
 // structure is semi-consistent within the oxc_linter crate
@@ -169,6 +168,7 @@ async function processFile(
     category: keywordMatch[1],
   });
 
+  // special case for eslint and typescript alias rules
   if (scope === 'eslint') {
     const ruleName = effectiveRuleName.replace(/^.*\//, '');
 
@@ -176,6 +176,18 @@ async function processFile(
       successResultArray.push({
         value: `@typescript-eslint/${ruleName}`,
         scope: 'typescript',
+        category: keywordMatch[1],
+      });
+    }
+
+    // special case for jest and vitest alias rules
+  } else if (scope === 'jest') {
+    const ruleName = effectiveRuleName.replace(/^.*\//, '');
+
+    if (viteTestCompatibleRules.includes(ruleName)) {
+      successResultArray.push({
+        value: `vitest/${ruleName}`,
+        scope: 'vitest',
         category: keywordMatch[1],
       });
     }

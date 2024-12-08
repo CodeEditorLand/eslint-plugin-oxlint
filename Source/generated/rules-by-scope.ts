@@ -89,6 +89,7 @@ const eslintRules = {
   'no-unsafe-finally': 'off',
   'no-unsafe-negation': 'off',
   'no-unsafe-optional-chaining': 'off',
+  'no-unused-expressions': 'off',
   'no-unused-labels': 'off',
   'no-unused-private-class-members': 'off',
   'no-unused-vars': 'off',
@@ -114,6 +115,7 @@ const eslintRules = {
   'unicode-bom': 'off',
   'use-isnan': 'off',
   'valid-typeof': 'off',
+  yoda: 'off',
 } as const;
 
 const importRules = {
@@ -313,6 +315,10 @@ const reactRules = {
   'react/void-dom-elements-no-children': 'off',
 } as const;
 
+const reactHooksRules = {
+  'react-hooks/rules-of-hooks': 'off',
+} as const;
+
 const reactPerfRules = {
   'react-perf/jsx-no-jsx-as-prop': 'off',
   'react-perf/jsx-no-new-array-as-prop': 'off',
@@ -469,13 +475,27 @@ const unicornRules = {
 } as const;
 
 const vitestRules = {
+  'vitest/consistent-test-it': 'off',
+  'vitest/expect-expect': 'off',
+  'vitest/no-alias-methods': 'off',
+  'vitest/no-commented-out-tests': 'off',
+  'vitest/no-conditional-expect': 'off',
+  'vitest/no-conditional-in-test': 'off',
   'vitest/no-conditional-tests': 'off',
+  'vitest/no-disabled-tests': 'off',
+  'vitest/no-focused-tests': 'off',
+  'vitest/no-identical-title': 'off',
   'vitest/no-import-node-test': 'off',
+  'vitest/no-restricted-jest-methods': 'off',
+  'vitest/no-test-prefixes': 'off',
   'vitest/prefer-each': 'off',
+  'vitest/prefer-hooks-in-order': 'off',
   'vitest/prefer-to-be-falsy': 'off',
   'vitest/prefer-to-be-object': 'off',
   'vitest/prefer-to-be-truthy': 'off',
   'vitest/require-local-test-context-for-concurrent-snapshots': 'off',
+  'vitest/valid-describe-callback': 'off',
+  'vitest/valid-expect': 'off',
 } as const;
 
 export {
@@ -488,6 +508,7 @@ export {
   nodeRules,
   promiseRules,
   reactRules,
+  reactHooksRules,
   reactPerfRules,
   typescriptRules,
   unicornRules,
