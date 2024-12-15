@@ -1,4 +1,4 @@
-import type { Linter } from 'eslint';
+import type { Linter } from "eslint";
 
 export type OxlintConfigPlugins = string[];
 
@@ -8,12 +8,12 @@ export type OxlintConfigRules = Record<string, unknown>;
 
 export type OxlintConfigIgnorePatterns = string[];
 
-export type EslintPluginOxlintConfig = Linter.Config<Record<string, 'off'>>;
+export type EslintPluginOxlintConfig = Linter.Config<Record<string, "off">>;
 
 export type OxlintConfig = {
-  [key: string]: unknown;
-  plugins?: OxlintConfigPlugins;
-  categories?: OxlintConfigCategories;
-  rules?: OxlintConfigRules;
-  ignorePatterns?: OxlintConfigIgnorePatterns;
+	[key: string]: unknown;
+	plugins?: OxlintConfigPlugins;
+	categories?: OxlintConfigCategories;
+	rules?: OxlintConfigRules;
+	ignorePatterns?: OxlintConfigIgnorePatterns;
 };

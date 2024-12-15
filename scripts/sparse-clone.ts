@@ -1,13 +1,12 @@
 import fs from "node:fs";
 import shell from "shelljs";
 
-import { version } from "../package.json";
+import packageJson, { version } from "../package.json";
 import {
-  TARGET_DIRECTORY,
-  SPARSE_CLONE_DIRECTORY,
-  VERSION_PREFIX,
-} from './constants.js';
-import packageJson from '../package.json' with { type: 'json' };
+	SPARSE_CLONE_DIRECTORY,
+	TARGET_DIRECTORY,
+	VERSION_PREFIX,
+} from "./constants.js";
 
 /**
  * Run this file in CLI like `pnpm run clone`
