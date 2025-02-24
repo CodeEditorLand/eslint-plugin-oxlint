@@ -42,11 +42,15 @@ export class RulesGenerator {
 
 			group.push(item.value);
 
-			map.set(key, group);
-		}
+      code += `const ${camelCase(grouping)}Rules: Record<string, "off"> = {\n`;
 
-		return map;
-	}
+      code += rules
+        ?.map((rule) => {
+          return `  '${rule.replaceAll('_', '-')}': "off"`;
+        })
+        .join(',\n');
+      code += '\n};\n\n';
+    }
 
 	public generateRulesCode() {
 		console.log(`Generating rules, grouped by ${this.rulesGrouping}`);
